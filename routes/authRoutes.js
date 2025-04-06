@@ -10,6 +10,7 @@ const router = express.Router();
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
+const FRONTEND_URL = https://frontend-web-amber.vercel.app/;
 
 // Spotify Authorization
 router.get('/login', (req, res) => {
@@ -84,7 +85,7 @@ router.get('/callback', async (req, res) => {
         });
         await saveTopArtists(userId, topArtists.data.items);
 
-        res.redirect(`http://localhost:3001?access_token=${access_token}`); // Redirect to frontend with token
+        res.redirect(`${FRONTEND_URL}?access_token=${access_token}`); // Redirect to frontend with token
     } catch (error) {
         console.error('Error getting token:', error.response?.data || error);
         res.status(500).send('Authentication failed');
@@ -98,7 +99,7 @@ router.get('/logout', (req, res) => {
             console.error("Session destruction error:", err);
             return res.status(500).send('Logout failed');
         }
-        res.redirect('http://localhost:3001'); // Redirect to frontend after logout
+        res.redirect(FRONTEND_URL); // Redirect to frontend after logout
     });
 });
 
