@@ -8,12 +8,16 @@ const authRoutes = require("./routes/authRoutes");
 const apiRoutes = require("./routes/apiRoutes");
 const pool  = require("./config/db");
 const spotifyRoutes = require("./routes/spotifyRoutes");
+const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:3001'];
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // ✅ Middleware
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
